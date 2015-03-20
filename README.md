@@ -44,4 +44,6 @@ class Page extends SiteTree {
 Please help with developing this form field. I hope the video of the demo showed enough to
 convince everyone that it's a worthwile endeavour. 
 
+For the curious, the ToDo's for this project are hosted here: https://trello.com/b/Ha2cQI1B/livingdocsfield-silverstripe .
+
 Please let me know if anything is needed, contact: w.vollprecht@gmail.com
