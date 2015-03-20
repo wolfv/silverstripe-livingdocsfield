@@ -8,9 +8,38 @@ See it on video here: [https://vimeo.com/122740856](https://vimeo.com/122740856)
 
 Currently the field is displaying some default content from Living Docs. Upon pressing the save button, 
 the content of the field is written as HTML to a hidden textarea field which is then saved in the DB.
-To open the Editor again, the content is also saved as JSON serialization in the Content_raw field.
+To open the Editor again, the content is also saved as JSON serialization in the Content_raw field (that, by the way, doesn't work just yet, because the submit is never triggered?).
 
-## Support
+## Using it
+
+Currently your `Page.php` should look like this:
+
+```
+class Page extends SiteTree {
+
+	private static $db = array(
+		"Content_raw" => "Text"
+	);
+
+	private static $has_one = array(
+	);
+
+	public function getCMSFields() {
+		$fields = parent::getCMSFields();
+		$ld = new LivingDocsField("Content");
+		$ld->addExtraClass("stacked");
+		
+		// You can hide this, too...
+		$raw_field = new TextField("Content_raw");
+		
+		$fields->addFieldToTab("Root.Main", $ld, "Metadata");
+		$fields->addFieldToTab("Root.Main", $raw_field, "Metadata");
+		return $fields;
+	}
+}
+```
+
+## Support the development
 
 Please help with developing this form field. I hope the video of the demo showed enough to
 convince everyone that it's a worthwile endeavour. 
