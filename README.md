@@ -2,7 +2,9 @@
 
 This is a first draft of a LivingDocs Field for SilverStripe. It basically contains no functionality.
 
-See it on video here: [https://vimeo.com/122740856](https://vimeo.com/122740856).
+*See it on video here:* [https://vimeo.com/122740856](https://vimeo.com/122740856).
+
+Roadmap: https://trello.com/b/Ha2cQI1B/livingdocsfield-silverstripe
 
 ## What it does
 
