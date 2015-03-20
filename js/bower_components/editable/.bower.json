@@ -1,0 +1,37 @@
+{
+  "name": "editable",
+  "version": "0.5.1",
+  "homepage": "https://github.com/upfrontIO/editable.js",
+  "authors": [
+    "Matteo Agosti<matteo@upfront.io>",
+    "Lukas Peyer<lukas@upfront.io>"
+  ],
+  "keywords": [
+    "contenteditable",
+    "editable"
+  ],
+  "description": "Friendly contenteditable API",
+  "license": "MIT",
+  "ignore": [
+    "**/**",
+    "!editable.js",
+    "!editable.min.js"
+  ],
+  "devDependencies": {
+    "sinon": "http://sinonjs.org/releases/sinon-1.10.3.js",
+    "bowser": "0.7.2",
+    "rangy": "1.2.3"
+  },
+  "dependencies": {
+    "jquery": "1.9.1"
+  },
+  "_release": "0.5.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.5.1",
+    "commit": "6ce62e74ba7be6394b931ff7550984d616f24ead"
+  },
+  "_source": "git://github.com/upfrontIO/editable.js.git",
+  "_target": "0.5.1",
+  "_originalSource": "editable"
+}

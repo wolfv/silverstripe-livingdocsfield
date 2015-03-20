@@ -1,0 +1,6 @@
+.livingdocs_EditorField {
+	position: relative;
+	z-index: 1000;
+	background: #fff;
+	padding: 10px;
+}
