@@ -7178,4 +7178,4 @@ var Spellcheck = (function() {
   Editable.content = content;
   Editable.bowser = bowser;
 
-})(window, document, window.jQuery);
+})(window, document, window.jQuery2);

@@ -1,4 +1,7 @@
-<div class="livingdocs_EditorField stacked">
-	
+<div class="livingdocs_EditorField" data-baseUrl="$LivingDocsBaseUrl">
+	<div class="livingdocs_EditorField_Toolbar">
+		
+	</div>
+	<div class="livingdocs_EditorField_Editor"></div>
 </div>
-<textarea class="hidden livingdocs_textfield" id="$name" name="$name"></textarea>
+<textarea class="hide livingdocs_textfield" id="$name" name="$name"></textarea>

@@ -1,6 +1,34 @@
 .livingdocs_EditorField {
 	position: relative;
+	height: 900px;
+}
+.livingdocs_EditorField_Editor {
 	z-index: 1000;
 	background: #fff;
-	padding: 10px;
+	padding: 0;
+	position: absolute;
+	top:0;
+	left: 250px;
+	right: 50px;
+}
+.toolbar-entry {
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  margin: 5px;
+  cursor: move;
+
+}
+.livingdocs_EditorField_Toolbar {
+	width: 200px;
+	position: absolute;
+	left: 0;
+}
+.livingdocs_EditorField_Editor iframe {
+	padding: 0px;
+	width: 100%;
+	height: 800px;
+}
+
+body.doc-no-selection .livingdocs_EditorField_Editor iframe {
+	pointer-events: none;
 }

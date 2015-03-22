@@ -1,4 +1,4 @@
-(function($) {
+(function($){
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
@@ -5633,6 +5633,9 @@ module.exports = ComponentDrag = (function() {
         if ((elem != null ? elem.nodeName : void 0) === 'IFRAME') {
           return _ref = _this.findElemInIframe(elem, eventPosition), eventPosition = _ref.eventPosition, elem = _ref.elem, _ref;
         } else {
+          if(elem.classList.contains("livingdocs_EditorField_Editor")) {
+            return _ref = _this.findElemInIframe(elem.children[0], eventPosition), eventPosition = _ref.eventPosition, elem = _ref.elem, _ref;
+          }
           return _this.iframeBox = void 0;
         }
       };
@@ -5743,6 +5746,7 @@ var ContainerEvent;
 module.exports = ContainerEvent = (function() {
   function ContainerEvent(_arg) {
     var blur, focus;
+    console.log(blur, focus, "ContainerEvent")
     this.target = _arg.target, focus = _arg.focus, blur = _arg.blur;
     this.type = focus ? 'containerFocus' : blur ? 'containerBlur' : void 0;
   }
@@ -7277,6 +7281,7 @@ module.exports = ComponentView = (function() {
   };
 
   ComponentView.prototype.focus = function(editableName) {
+    console.log("ComponentView Focus")
     var directive, _ref;
     directive = editableName ? this.directives.get(editableName) : (_ref = this.directives.editable) != null ? _ref[0] : void 0;
     return $(directive != null ? directive.elem : void 0).focus();
@@ -7354,6 +7359,7 @@ module.exports = ComponentView = (function() {
 
   ComponentView.prototype.focusEditable = function(name) {
     var $elem;
+    console.log("ComponentView FocusEditable")
     $elem = this.directives.$getElem(name);
     return $elem.addClass(css.noPlaceholder);
   };
@@ -9672,4 +9678,5 @@ module.exports = $;
 
 
 },{}]},{},[12]);
-})(jQuery);
+
+})(jQuery2);
