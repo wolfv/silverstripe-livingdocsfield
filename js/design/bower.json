@@ -1,0 +1,12 @@
+{
+  "name": "livingdocs-design-boilerplate",
+  "version": "0.2.0",
+  "devDependencies": {
+    "livingdocs-engine": "git@github.com:upfrontIO/livingdocs-engine.git#~0.8.1",
+    "jquery": "~2.1.1"
+  },
+  "ignore": [
+    "**/**",
+    "!dist/**/**"
+  ]
+}

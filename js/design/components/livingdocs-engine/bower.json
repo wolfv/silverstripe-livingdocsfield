@@ -1,0 +1,15 @@
+{
+  "name": "livingdocs-engine",
+  "version": "0.8.1",
+  "homepage": "https://github.com/upfrontIO/livingdocs-engine",
+  "description": "Livingdocs Engine",
+  "private": true,
+  "license": "LGPL-3.0+",
+  "ignore": [
+    "**/**",
+    "!dist/**/**"
+  ],
+  "dependencies": {
+    "editable": "0.5.1"
+  }
+}

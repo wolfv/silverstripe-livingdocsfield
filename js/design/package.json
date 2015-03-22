@@ -1,0 +1,30 @@
+{
+  "name": "livingdocs-design",
+  "version": "0.2.0",
+  "scripts": {
+    "start": "grunt server"
+  },
+  "dependencies": {
+    "coffee-script": "^1.8.0",
+    "color": "^0.6.0",
+    "express": "^4.1.1",
+    "grunt-livingdocs-design": "^0.1.1"
+  },
+  "devDependencies": {
+    "cheerio": "^0.12.4",
+    "grunt": "^0.4.2",
+    "grunt-autoprefixer": "^2.2.0",
+    "grunt-bump": "^0.1.0",
+    "grunt-contrib-clean": "^0.4.1",
+    "grunt-contrib-copy": "^0.4.1",
+    "grunt-contrib-sass": "^0.7.2",
+    "grunt-contrib-stylus": "^0.20.0",
+    "grunt-contrib-watch": "^0.4.4",
+    "grunt-express": "^1.2.1",
+    "grunt-mkdir": "^0.1.2",
+    "grunt-recess": "^0.3.3",
+    "html-minifier": "^0.5.6",
+    "load-grunt-tasks": "^0.4.0",
+    "pretty-data": "^0.40.0"
+  }
+}
