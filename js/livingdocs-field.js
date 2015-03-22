@@ -313,7 +313,10 @@ $.entwine('ss', function($){
 		}
 		article.model.changed.add(function() {
 			saveLivingdocs()
-		})
+		});
+		
+		// save living docs once, to prepopulate the Content (HTML) Field
+		saveLivingdocs()
 
 		})
 	}
