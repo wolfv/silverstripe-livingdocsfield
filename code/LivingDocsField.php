@@ -7,7 +7,7 @@ class LivingDocsField extends TextareaField {
 	function Field($properties = array()) {
 		Requirements::javascript(LIVINGDOCS_MODULE. '/js/bower_components/jquery/dist/jquery_2.1.3.js');
 		Requirements::javascript(LIVINGDOCS_MODULE. '/js/jquery_noconflict.js');
-		$properties["design"] = LIVINGDOCS_MODULE . '/js/default-design.js';
+		$properties["design"] = LIVINGDOCS_MODULE . '/js/design/dist/design.js';
 		Requirements::javascript($properties["design"]);
 		Requirements::javascript(LIVINGDOCS_MODULE . '/js/bower_components/editable/editable.js');
 		Requirements::javascript(LIVINGDOCS_MODULE . '/js/bower_components/livingdocs-engine/dist/livingdocs-engine.js');

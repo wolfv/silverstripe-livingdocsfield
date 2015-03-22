@@ -5,7 +5,7 @@ $.entwine('ss', function($){
 	function loadLivingDocs() {
 		var selected_design = "boilerplate";	
 
-		design[selected_design].assets.basePath = $(".livingdocs_EditorField").first().data("baseurl") + "/js/bower_components/livingdocs-engine/public/assets";
+		design[selected_design].assets.basePath = $(".livingdocs_EditorField").first().data("baseurl") + "/js/design/src/";
 		doc.design.load(design[selected_design]);
 
 		doc.config({livingdocsCssFile: "livingdocsfield/js/bower_components/livingdocs-engine/dist/css/livingdocs.css"});
@@ -70,12 +70,16 @@ $.entwine('ss', function($){
 	        });
 		}
 
-		article.createView({
+		var ready = article.createView({
 			interactive: true, 
 			iframe: true, 
 			host: ".livingdocs_EditorField_Editor", 
 			wrapper: doc.design.designs[selected_design].wrapper
 		})
+		// console.log(ready)
+		ready.then(function() {
+
+
 
 		$host = $(".livingdocs_EditorField_Editor")
 
@@ -91,39 +95,35 @@ $.entwine('ss', function($){
 
 		article.interactiveView.page.editableController.selection.add(function(view, editableName, selection) {
 			$(".livingdocs_EditorField_Toolbar_textopts").remove()
-			console.log(selection)
+		    var outer_el = $("<div>").addClass("livingdocs_EditorField_Toolbar_textopts")
 			if(selection && selection.isSelection) {
 				var offset = $host.offset()
-				selection.range.refresh()
 				var rect = selection.getRects()[0]
-
-				var outer_el = $("<div>").addClass("livingdocs_EditorField_Toolbar_textopts")
-				outer_el.css({position: "absolute", left: rect.left + offset.left, top: rect.top + offset.top - 20, background: "black", "z-index": 1000})
-				var $el = $("<button>").text("Add Link").on('click', function() {
-					selectLink(function(linkObj) {
-						selection.link(linkObj.href, {target: linkObj.target, title: linkObj.title})
-						selection.collapseAtEnd();
-						selection.triggerChange();
-
-						selection = null;
+				var $el = $("<button>").text("Add Link")
+					.on('mousedown', function(e) { e.preventDefault() })
+					.on('click', function() {
+						selectLink(function(linkObj) {
+							selection.link(linkObj.href, {target: linkObj.target, title: linkObj.title})
+							selection.triggerChange()
+						})
+					}) 
+				outer_el.append($el);
+				var $el = $("<button>").text("Bold")
+					.on('mousedown', function(e) { e.preventDefault() })
+					.on('click', function() {
+						selection.toggleBold()
+						selection.triggerChange()
 					})
-				}) 
 				outer_el.append($el);
-				var $el = $("<button>").text("Bold").on('click', function() {
-					selection.toggleBold()
-					selection.collapseAtEnd();
-					selection.triggerChange();
-					selection.range.detach()
-					selection = null;
-				}) 
+				var $el = $("<button>").text("Italic")
+					.on("mousedown", function(e) { e.preventDefault() })
+					.on('click', function() {
+						selection.toggleEmphasis()
+						selection.triggerChange();	
+					}) 
 				outer_el.append($el);
-				var $el = $("<button>").text("Italic").on('click', function() {
-					selection.toggleEmphasis()
-					selection.collapseAtEnd();
-					selection.triggerChange();	
-					selection = null;
-				}) 
-				outer_el.append($el);
+				$("button", outer_el)
+				outer_el.css({position: "absolute", left: rect.left + offset.left, top: rect.top + offset.top - 40, background: "black", "z-index": 1000})
 				$("body").append(outer_el)
 			}
 		})
@@ -156,7 +156,6 @@ $.entwine('ss', function($){
 		    				else 
 		    					component.setStyle(curr_style.name, "")
 	    				});
-	    				console.log(curr_style)
 	    				el = $("<label>").text(curr_style.label).prepend(el)
 
 	    			default:
@@ -193,7 +192,6 @@ $.entwine('ss', function($){
 				return null;
 			},
 			getSelection: function() {
-				console.log("Gettting sele tionsklasjd ")
 				return $("<div>");
 			},
 			createBookmark: function() {
@@ -301,19 +299,29 @@ $.entwine('ss', function($){
 	      });
 	    }
 
-		$(".livingdocs_textfield").first().parents("form").on("submit", function() {
-			$($(".livingdocs_textfield")[0]).val(article.toHtml());
-			console.log($($(".livingdocs_textfield")[0]).val())
-			var name = $($(".livingdocs_textfield")[0]).attr("name")
-			console.log(name)
-			$("#Form_EditForm_" + name + "_raw").val(article.toJson());
-			console.log($("#Form_EditForm_" + name + "_raw").val()
-)		});
+		// $(".livingdocs_textfield").first().parents("form").on("submit", function() {
+		// 	saveLivingdocs()
+		// });
 		window.article = article;
 
+		var $html_field = $($(".livingdocs_textfield")[0])
+		var name = $($(".livingdocs_textfield")[0]).attr("name")
+		var $raw_field = $("#Form_EditForm_" + name + "_raw");
+		function saveLivingdocs() {
+			$html_field.val(article.toHtml())
+			$raw_field.val(article.toJson())
+		}
+		article.model.changed.add(function() {
+			saveLivingdocs()
+		})
+
+		})
 	}
 
-
+	// $(".cms-container .Actions").on("mousedown", function() {
+	// 	saveLivingdocs()
+	// })
+	
 	$(".cms-container").on("afterstatechange", function() {
 		loadLivingDocs()
 	})

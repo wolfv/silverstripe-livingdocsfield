@@ -5746,7 +5746,6 @@ var ContainerEvent;
 module.exports = ContainerEvent = (function() {
   function ContainerEvent(_arg) {
     var blur, focus;
-    console.log(blur, focus, "ContainerEvent")
     this.target = _arg.target, focus = _arg.focus, blur = _arg.blur;
     this.type = focus ? 'containerFocus' : blur ? 'containerBlur' : void 0;
   }
@@ -7281,7 +7280,6 @@ module.exports = ComponentView = (function() {
   };
 
   ComponentView.prototype.focus = function(editableName) {
-    console.log("ComponentView Focus")
     var directive, _ref;
     directive = editableName ? this.directives.get(editableName) : (_ref = this.directives.editable) != null ? _ref[0] : void 0;
     return $(directive != null ? directive.elem : void 0).focus();
@@ -7359,7 +7357,6 @@ module.exports = ComponentView = (function() {
 
   ComponentView.prototype.focusEditable = function(name) {
     var $elem;
-    console.log("ComponentView FocusEditable")
     $elem = this.directives.$getElem(name);
     return $elem.addClass(css.noPlaceholder);
   };
