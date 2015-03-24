@@ -1,34 +1,46 @@
 .livingdocs_EditorField {
-	position: relative;
-	height: 900px;
-}
+  position: relative;
+  height: 900px; }
+
 .livingdocs_EditorField_Editor {
-	z-index: 1000;
-	background: #fff;
-	padding: 0;
-	position: absolute;
-	top:0;
-	left: 250px;
-	right: 50px;
-}
+  z-index: 1000;
+  background: #fff;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 250px;
+  right: 50px; }
+
 .toolbar-entry {
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   margin: 5px;
   cursor: move;
+  border-radius: 3px;
+  background: #0E74AF;
+  color: #FFF;
+  text-align: left; }
+  .toolbar-entry .add-button {
+    background: #0B6294;
+    float: right;
+    padding: 3px 6px;
+    margin-top: -3px;
+    border-radius: 2px;
+    cursor: pointer; }
+    .toolbar-entry .add-button:hover {
+      background: orange; }
 
-}
 .livingdocs_EditorField_Toolbar {
-	width: 200px;
-	position: absolute;
-	left: 0;
-}
+  width: 200px;
+  position: absolute;
+  left: 0; }
+
 .livingdocs_EditorField_Editor iframe {
-	padding: 0px;
-	width: 100%;
-	height: 800px;
-}
+  padding: 0px;
+  width: 100%;
+  height: 800px; }
 
 body.doc-no-selection .livingdocs_EditorField_Editor iframe {
-	pointer-events: none;
-}
+  pointer-events: none; }
+
+/*# sourceMappingURL=livingdocs-field.css.map */

@@ -1,4 +1,4 @@
-<div class="livingdocs_EditorField" data-baseUrl="$LivingDocsBaseUrl">
+<div class="livingdocs_EditorField" data-base-url="$LivingDocsBaseUrl">
 	<div class="livingdocs_EditorField_Toolbar">
 		
 	</div>

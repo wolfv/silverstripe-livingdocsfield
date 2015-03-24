@@ -5,10 +5,11 @@ $.entwine('ss', function($){
 	function loadLivingDocs() {
 		var selected_design = "boilerplate";	
 
-		design[selected_design].assets.basePath = $(".livingdocs_EditorField").first().data("baseurl") + "/js/design/src/";
+		var baseUrl = $(".livingdocs_EditorField").first().data("base-url")
+		design[selected_design].assets.basePath = baseUrl + "/js/design/src/";
 		doc.design.load(design[selected_design]);
 
-		doc.config({livingdocsCssFile: "livingdocsfield/js/bower_components/livingdocs-engine/dist/css/livingdocs.css"});
+		doc.config({livingdocsCssFile: baseUrl + "/css/livingdocs-inside.css"});
 
 		// Create the document
 		var name = $($(".livingdocs_textfield")[0]).attr("name");
@@ -86,10 +87,19 @@ $.entwine('ss', function($){
 	    var $toolbar = $('.livingdocs_EditorField_Toolbar');
 
 	    for (var i = 0; i < doc.design.designs["boilerplate"].components.length; i++) {
+	    	function clickableComponent(doc, name, $elem) {
+	    		$elem.mousedown(function(e){e.stopPropagation();}).click(function() {
+			      	var newComponent = article.createComponent(name);
+			      	article.componentTree.append(newComponent);
+			    });
+	    	}
 	      var template = doc.design.designs["boilerplate"].components[i];
 	      $entry = $('<div class="toolbar-entry">');
 	      $entry.html(template.label);
+	      $add = $("<span>").text("Add").addClass("add-button")
+	      $entry.append($add)
 	      $toolbar.append($entry);
+	      clickableComponent(doc, template.name, $add);
 	      draggableComponent(doc, template.name, $entry);
 	    }
 
@@ -106,7 +116,7 @@ $.entwine('ss', function($){
 							selection.link(linkObj.href, {target: linkObj.target, title: linkObj.title})
 							selection.triggerChange()
 						})
-					}) 
+					})
 				outer_el.append($el);
 				var $el = $("<button>").text("Bold")
 					.on('mousedown', function(e) { e.preventDefault() })
@@ -131,8 +141,23 @@ $.entwine('ss', function($){
 
 	    article.interactiveView.page.focus.componentFocus.add(function(component) {
 	    	$(".livingdocs_EditorField_Toolbar_options").remove()
+
+	    	editorBody = component.$elem.parents("body")
+	    	$(".block-tools", editorBody).remove()
+	    	offset = component.$elem.offset()
+
+	    	$blockSettings = $("<div>").addClass("block-tools").css({width: 150, height: 50, position: "absolute", opacity: 1, left: offset.left > 0 ? offset.left : 0, top: offset.top - 50 > 0 ? offset.top - 50 : 0})
+
+	    	$settingsButton = $("<div>").addClass("btn btn-round btn-transparent").html("<i class='glyphicon glyphicon-cog'>")
+	    	$blockSettings.append($settingsButton)
+
+	    	$moveButton = $("<div>").addClass("btn btn-round btn-transparent").html("<i class'glyphicon glyphicon-fullscreen'>").mousedown(function(e) {
+	    		article.interactiveView.page.startDrag({componentModel: component.model, componentView: component, event: e, config: {direct: true}})
+	    	})
+	    	$blockSettings.append($moveButton)
+
 	    	var options = $("<div>").addClass("livingdocs_EditorField_Toolbar_options")
-	    	options.append("<h3>").text("Properties")
+	    	options.append($("<h3>").text("Properties"))
 
 	    	for(s_id in component.model.template.styles) {
 	    		var curr_style = component.model.template.styles[s_id];
@@ -147,6 +172,7 @@ $.entwine('ss', function($){
 	    				el.on("change", function(value) {
 	    					component.setStyle(curr_style.name, this.value)
 	    				})
+	    				el = $("<label>").text(curr_style.label).append(el)
 	    				break
 	    			case "option":
 	    				el = $("<input>").attr({type: 'checkbox'})
@@ -157,7 +183,6 @@ $.entwine('ss', function($){
 		    					component.setStyle(curr_style.name, "")
 	    				});
 	    				el = $("<label>").text(curr_style.label).prepend(el)
-
 	    			default:
 	    				break;
 	    		}
@@ -181,6 +206,21 @@ $.entwine('ss', function($){
 
 	    	})
 	    	options.append($delete_button);
+			
+			$deleteButton = $("<div>").addClass("btn btn-round btn-transparent btn-danger").html("<i class='glyphicon glyphicon-remove'>").click(function() {
+				component.model.remove()
+			})
+			$blockSettings.append($deleteButton)
+
+			$settingsButton.click(function() {
+				options.addClass("block-settings")
+				editorBody.append(options)
+				options.css({background: "#FFF", top: offset.top, left: offset.left})
+			})
+
+			editorBody.append($blockSettings);
+			$blockSettings.fadeIn(500)
+
 	    })
 
 		var editor_template = {
@@ -321,10 +361,6 @@ $.entwine('ss', function($){
 		})
 	}
 
-	// $(".cms-container .Actions").on("mousedown", function() {
-	// 	saveLivingdocs()
-	// })
-	
 	$(".cms-container").on("afterstatechange", function() {
 		loadLivingDocs()
 	})
