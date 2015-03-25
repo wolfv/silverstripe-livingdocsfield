@@ -1,6 +1,10 @@
 .livingdocs_EditorField
   position: relative
   height: 900px
+  overflow: hidden
+  -webkit-backface-visibility: hidden
+  &.fullscreen .livingdocs_EditorField_Editor
+    height: 100%
 
 .livingdocs_EditorField_Editor
   z-index: 1000
@@ -10,11 +14,12 @@
   top: 0
   left: 250px
   right: 50px
+  height: 800px
 
 .toolbar-entry
   padding: 10px
   border: 1px solid rgba(0, 0, 0, 0.5)
-  margin: 5px
+  margin: 5px 0
   cursor: move
   border-radius: 3px
   background: #0E74AF
@@ -34,11 +39,51 @@
   width: 200px
   position: absolute
   left: 0
-
+  #hide-blocks
+    position: absolute
+    top: 0
+    right: -30px
+    width: 30px
+    z-index: 1001
+    background: #333
+    padding: 3px 5px
+    color: #FFF
+    text-align: center
 .livingdocs_EditorField_Editor iframe 
   padding: 0px
   width: 100%
-  height: 800px
+  height: 100%
 
 body.doc-no-selection .livingdocs_EditorField_Editor iframe 
   pointer-events: none
+
+div:-webkit-full-screen 
+  width: 100% !important
+  height: 100%
+  z-index: 100
+  .livingdocs_EditorField_Editor
+    height: 100%
+    iframe
+      height: 100%
+
+div:-moz-full-screen 
+  width: 100% !important
+
+div:-ms-fullscreen 
+  width: 100% !important
+
+div:fullscreen 
+  width: 100% !important
+
+
+// :-webkit-full-screen .tohide 
+//   display: none
+
+// :-moz-full-screen .tohide 
+//   display: none
+
+// :-ms-fullscreen .tohide 
+//   display: none
+
+// :fullscreen .tohide 
+//   display: none

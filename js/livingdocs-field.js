@@ -11,6 +11,8 @@ $.entwine('ss', function($){
 
 		doc.config({livingdocsCssFile: baseUrl + "/css/livingdocs-inside.css"});
 
+		$body =  $(document.body)
+
 		// Create the document
 		var name = $($(".livingdocs_textfield")[0]).attr("name");
 		var json_content = $("#Form_EditForm_" + name + "_raw").val();
@@ -85,6 +87,43 @@ $.entwine('ss', function($){
 		$host = $(".livingdocs_EditorField_Editor")
 
 	    var $toolbar = $('.livingdocs_EditorField_Toolbar');
+	    var sidebarVisible = true;
+	    $('#hide-blocks', $toolbar).click(function() {
+	    	if(sidebarVisible) {
+	    		$toolbar.animate({left: -200})
+	    		$(this).text(">")
+	    		$(".livingdocs_EditorField_Editor").animate({left: 0})
+	    		sidebarVisible = false;
+	    	} else {
+	    		$(this).text("<")
+	    		$toolbar.animate({left: 0})
+	    		$(".livingdocs_EditorField_Editor").animate({left: 250})
+	    		sidebarVisible = true;
+	    	}
+	    });
+
+	    var fullscreen = false;
+	    $("#livingdocs_FullScreen", $toolbar).click(function() {
+	    	if(!fullscreen) {
+		    	var elem = $(".livingdocs_EditorField")
+		    	$body.append(elem)
+		    	elem.addClass("fullscreen")
+		    	$body.css({overflow: "hidden"})
+		    	$(document.html).css({overflow: "hidden"})
+		    	elem.css({position: "absolute", top: 0, left: 0, right: 0, bottom: 0, height: "100%", "z-index": 990, background: "white", padding: "20px"})
+	    	} else {
+	    		
+	    	}
+	    	// if (elem.requestFullscreen) {
+	    	//   elem.requestFullscreen();
+	    	// } else if (elem.msRequestFullscreen) {
+	    	//   elem.msRequestFullscreen();
+	    	// } else if (elem.mozRequestFullScreen) {
+	    	//   elem.mozRequestFullScreen();
+	    	// } else if (elem.webkitRequestFullscreen) {
+	    	//   elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+	    	// }
+	    })
 
 	    for (var i = 0; i < doc.design.designs["boilerplate"].components.length; i++) {
 	    	function clickableComponent(doc, name, $elem) {
@@ -93,16 +132,28 @@ $.entwine('ss', function($){
 			      	article.componentTree.append(newComponent);
 			    });
 	    	}
-	      var template = doc.design.designs["boilerplate"].components[i];
-	      $entry = $('<div class="toolbar-entry">');
-	      $entry.html(template.label);
-	      $add = $("<span>").text("Add").addClass("add-button")
-	      $entry.append($add)
-	      $toolbar.append($entry);
-	      clickableComponent(doc, template.name, $add);
-	      draggableComponent(doc, template.name, $entry);
+	    	function draggableComponent (doc, name, $elem) {
+	    	  $elem.on('mousedown', function(event) {
+	    	    var newComponent = article.createComponent(name);
+	    	    doc.startDrag({
+	    	      componentModel: newComponent,
+	    	      event: event,
+	    	      config: {
+	    	        preventDefault: true,
+	    	        direct: true
+	    	      }
+	    	    });
+	    	  });
+	    	}
+		    var template = doc.design.designs["boilerplate"].components[i];
+		    $entry = $('<div class="toolbar-entry">');
+		    $entry.html(template.label);
+		    $add = $("<span>").text("Add").addClass("add-button")
+		    $entry.append($add)
+		    $toolbar.append($entry);
+		    clickableComponent(doc, template.name, $add);
+		    draggableComponent(doc, template.name, $entry);
 	    }
-
 		article.interactiveView.page.editableController.selection.add(function(view, editableName, selection) {
 			$(".livingdocs_EditorField_Toolbar_textopts").remove()
 		    var outer_el = $("<div>").addClass("livingdocs_EditorField_Toolbar_textopts")
@@ -134,7 +185,7 @@ $.entwine('ss', function($){
 				outer_el.append($el);
 				$("button", outer_el)
 				outer_el.css({position: "absolute", left: rect.left + offset.left, top: rect.top + offset.top - 40, background: "black", "z-index": 1000})
-				$("body").append(outer_el)
+				$body.append(outer_el)
 			}
 		})
 
@@ -272,7 +323,7 @@ $.entwine('ss', function($){
 				// Show a placeholder for instant feedback. Will be replaced with actual
 				// form dialog once its loaded.
 				dialog = $('<div class="htmleditorfield-dialog htmleditorfield-' + type + 'dialog loading">');
-				$('body').append(dialog);
+				$body.append(dialog);
 				$.ajax({
 					url: url,
 					complete: function() {
@@ -306,7 +357,7 @@ $.entwine('ss', function($){
 				// Show a placeholder for instant feedback. Will be replaced with actual
 				// form dialog once its loaded.
 				dialog = $('<div class="htmleditorfield-dialog htmleditorfield-' + type + 'dialog loading">');
-				$('body').append(dialog);
+				$body.append(dialog);
 				$.ajax({
 					url: url,
 					complete: function() {
@@ -325,19 +376,7 @@ $.entwine('ss', function($){
 		}
 
 
-	    function draggableComponent (doc, name, $elem) {
-	      $elem.on('mousedown', function(event) {
-	        var newComponent = article.createComponent(name);
-	        doc.startDrag({
-	          componentModel: newComponent,
-	          event: event,
-	          config: {
-	            preventDefault: true,
-	            direct: true
-	          }
-	        });
-	      });
-	    }
+
 
 		// $(".livingdocs_textfield").first().parents("form").on("submit", function() {
 		// 	saveLivingdocs()
